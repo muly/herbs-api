@@ -1,0 +1,207 @@
+openapi: 3.0.3
+info:
+  title: herbs API
+  description: |-
+    herbs api blah blahblahblah
+  version: 0.0.1
+tags:
+  - name: herbs
+    description: Everything about herbs
+paths:
+  /api/herbs:
+    post:
+      tags:
+        - herbs
+      summary: to add a new herb, along with its properties
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HerbRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HerbResponse'  
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'  
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'  
+    get:
+      tags:
+        - herbs
+      summary: Get By search
+      parameters:
+       - in: query
+         name: heals
+         schema:
+          type: string
+         required: true
+         example: "cough"
+      
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HerbResponse'  
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'  
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse' 
+
+  /api/herbs/{id}:
+    put:
+      tags:
+        - herbs
+      summary: Update By ID
+      parameters:
+       - in: path
+         name: id
+         schema:
+          type: integer
+         required: true
+         example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HerbRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HerbResponse'  
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'  
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse' 
+    get:
+      tags:
+        - herbs
+      summary: Get By ID
+      parameters:
+       - in: path
+         name: id
+         schema:
+          type: integer
+         required: true
+         example: 1
+      
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HerbResponse'  
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'  
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse' 
+    delete:
+      tags:
+        - herbs
+      summary: Get By ID
+      parameters:
+       - in: path
+         name: id
+         schema:
+          type: integer
+         required: true
+         example: 1
+      
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'  
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse' 
+    
+                
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          example: some error occured
+    HerbRequest:
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+          example: basil
+        heals: 
+          type: array
+          items: 
+            type: string
+          example: ["cold", "cough"]
+    HerbResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: basil
+        heals: 
+          type: array
+          items: 
+            type: string
+          example: ["cold", "cough"]
+          
